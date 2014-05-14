@@ -25,6 +25,14 @@ public class User extends AuditableEntity implements Serializable {
     private BigDecimal point;
     private List<Address> addresses;
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }

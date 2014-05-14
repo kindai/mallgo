@@ -15,6 +15,13 @@
         </sourceRoots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -94,6 +101,8 @@
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.0.5" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis-spring:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: cglib:cglib:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.ibatis:ibatis2-sqlmap:2.1.7.597" level="project" />
+    <orderEntry type="library" name="Maven: com.ibatis:ibatis2-common:2.1.7.597" level="project" />
   </component>
 </module>
 

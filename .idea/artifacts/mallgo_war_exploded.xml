@@ -72,6 +72,8 @@
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.0.5" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.0.1" />
           <element id="library" level="project" name="Maven: cglib:cglib:2.2.2" />
+          <element id="library" level="project" name="Maven: com.ibatis:ibatis2-sqlmap:2.1.7.597" />
+          <element id="library" level="project" name="Maven: com.ibatis:ibatis2-common:2.1.7.597" />
         </element>
       </element>
     </root>

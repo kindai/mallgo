@@ -16,13 +16,22 @@ public class Order extends AuditableEntity implements Serializable {
 
     private User user;
     private List<LineItem> lineItems = new ArrayList<LineItem>();
-    private ShipAddress shipAddress;
+    private Address shipAddress;
     private Courier courier;
     private BigDecimal totalPrice;
     private Payment payment;
     private Date orderDate;
     private OrderStatus status;
     private OrderType orderType;
+    private String code;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public OrderType getOrderType() {
         return orderType;
@@ -40,11 +49,11 @@ public class Order extends AuditableEntity implements Serializable {
         this.user = user;
     }
 
-    public ShipAddress getShipAddress() {
+    public Address getShipAddress() {
         return shipAddress;
     }
 
-    public void setShipAddress(ShipAddress shipAddress) {
+    public void setShipAddress(Address shipAddress) {
         this.shipAddress = shipAddress;
     }
 
@@ -96,7 +105,7 @@ public class Order extends AuditableEntity implements Serializable {
         return lineItems;
     }
 
-    public void initOrder(User user, ShipAddress shipAddress, BigDecimal totalPrice, Cart cart) {
+    public void initOrder(User user, Address shipAddress, BigDecimal totalPrice, Cart cart) {
 
         this.user = user;
         orderDate = new Date();
