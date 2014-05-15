@@ -19,6 +19,9 @@ public class RestUtilTest {
         System.out.println(json);
         String s = RestUtil.decodeAndUnzip(json);
         System.out.println(s);
+
+        json = restUtil.getJSON("http://localhost:8080/rest/item/get_item_by_name/Persian");
+        System.out.println(json);
     }
 
     @Test

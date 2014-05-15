@@ -17,22 +17,22 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="test.model" targetProject="./">
+        <javaModelGenerator targetPackage="com.mallgo.model" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
+            <property name="constructorBased" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="test.xml"  targetProject="./">
+        <sqlMapGenerator targetPackage="com.mallgo.persistence"  targetProject="./src/main/resources">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="test.dao"  targetProject="./">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mallgo.persistence"  targetProject="./src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
         <table schema="mallgo" tableName="%" >
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="id" sqlStatement="MySQL" identity="true" />
+            <property name="useActualColumnNames" value="false"/>
         </table>
 
     </context>

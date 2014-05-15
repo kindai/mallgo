@@ -38,8 +38,7 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!-- enable component scanning (beware that this does not enable mapper scanning!) -->    
-    <context:component-scan base-package="com.mallgo.service" />
+    <!-- enable component scanning (beware that this does not enable mapper scanning!) -->
     <context:component-scan base-package="com.mallgo.rest" />
 
     <!-- enable autowire -->
@@ -55,7 +54,7 @@
         <property name="typeAliasesPackage" value="com.mallgo.domain" />
     </bean>
 
-    <!--<mybatis:scan base-package="com.mallgo.persistence" />-->
+    <!--<mybatis:scan base-package="com.mallgo.old.persistence" />-->
     <!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.mallgo.persistence" />

@@ -2,11 +2,9 @@ package com.mallgo.rest;
 
 import com.google.gson.Gson;
 import com.mallgo.common.RestUtil;
-import com.mallgo.domain.Product;
-import com.mallgo.persistence.AccountMapper;
-import com.mallgo.persistence.CategoryMapper;
-import com.mallgo.service.AccountService;
-import com.mallgo.service.ProductService;
+import com.mallgo.model.Product;
+import com.mallgo.model.ProductExample;
+import com.mallgo.persistence.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Created by kin on 5/11/14.
@@ -25,7 +24,7 @@ import java.io.UnsupportedEncodingException;
 public class ProductRestBean {
 
     @Autowired
-    private ProductService productService;
+    private ProductMapper productMapper;
 
     @GET
     @Path("/")
@@ -45,7 +44,7 @@ public class ProductRestBean {
         if(!restUtil.isValidToken(tokenCode, salt)){
             return Response.status(HttpServletResponse.SC_FORBIDDEN).entity("").build();
         }
-        Product product = productService.getProductByName(name);
+        List<Product> product = productMapper.selectByExample(null);
         String jsonIds = new Gson().toJson(product);
         if(Boolean.FALSE.equals(compressed)){
             return Response.status(HttpServletResponse.SC_OK).entity(jsonIds).build();
