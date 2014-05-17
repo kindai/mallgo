@@ -9,3 +9,4 @@ insert into USER (username,password,email,status,city,state,country,zip,phone,la
 
 insert into CATEGORY (name,description,created_by,modified_by)values
 ('Default','Default Category','Admin','Admin');
+

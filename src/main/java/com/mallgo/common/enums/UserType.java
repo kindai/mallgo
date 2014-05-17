@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum UserType implements EnumDomainValue {
-    PROVIDER(1011L, "Provider", "Provider"),
-    CUSTOMER(1012L, "Customer", "Customer"),
+    PROVIDER(28011L, "Provider", "Provider"),
+    CUSTOMER(28012L, "Customer", "Customer"),
     ;
     private static List<UserType> list = new ArrayList<>();
     static{

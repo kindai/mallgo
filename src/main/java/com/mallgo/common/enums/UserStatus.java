@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum UserStatus implements EnumDomainValue {
-    ENABLED(23012L, "Enabled", "Enabled"),
-    DISABLED(23013L, "Disabled", "Disabled"),
-    DELETED(23014L, "Deleted", "Deleted"),
+    ENABLED(29012L, "Enabled", "Enabled"),
+    DISABLED(29013L, "Disabled", "Disabled"),
+    DELETED(29014L, "Deleted", "Deleted"),
     ;
     private static List<UserStatus> list = new ArrayList<>();
     static{
