@@ -36,7 +36,7 @@ public class UserRestBean {
         RestUtil restUtil = new RestUtil();
 
         int kin1=0;
-        kin1=1;
+        kin1=10;
 
         if(!restUtil.isValidToken(tokenCode, salt)){
             return Response.status(HttpServletResponse.SC_FORBIDDEN).entity("").build();
