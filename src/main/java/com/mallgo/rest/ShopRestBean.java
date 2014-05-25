@@ -2,11 +2,9 @@ package com.mallgo.rest;
 
 import com.google.gson.Gson;
 import com.mallgo.common.RestUtil;
-import com.mallgo.model.Shop;
-import com.mallgo.model.ShopExample;
-import com.mallgo.model.User;
-import com.mallgo.model.UserExample;
+import com.mallgo.model.*;
 import com.mallgo.persistence.ShopMapper;
+import com.mallgo.persistence.ShopPicMapper;
 import com.mallgo.persistence.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,6 +27,9 @@ import java.util.List;
 public class ShopRestBean {
     @Autowired
     private ShopMapper shopMapper;
+
+    @Autowired
+    private ShopPicMapper shopPicMapper;
 
     @GET
     @Path("/{name}/{tokenCode}")
@@ -54,17 +55,11 @@ public class ShopRestBean {
     }
 
     @POST
-    @Path("/{tokenCode}")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateShop(Shop shop, @PathParam("tokenCode") String tokenCode, @QueryParam("s") String salt,
+    public Response updateShop(Shop shop,
                                @Context UriInfo uriInfo, @Context HttpServletResponse response) throws UnsupportedEncodingException, SQLException {
-
-        RestUtil restUtil = new RestUtil();
-
-        if(!restUtil.isValidToken(tokenCode, salt)){
-            return Response.status(HttpServletResponse.SC_FORBIDDEN).entity("").build();
-        }
 
         ShopExample shopExample = new ShopExample();
         shopExample.createCriteria().andNameEqualTo(shop.getName());
@@ -77,7 +72,41 @@ public class ShopRestBean {
             throw new SQLException();
         }
 
-        return Response.status(HttpServletResponse.SC_OK).build();
+        return Response.status(HttpServletResponse.SC_ACCEPTED).entity(shop).build();
 
     }
+
+    @GET
+    @Path("/shop_pic/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPic(@PathParam("name")String name, @PathParam("tokenCode") String tokenCode, @QueryParam("zip") Boolean compressed,  @QueryParam("s") String salt,
+                           @Context UriInfo uriInfo, @Context HttpServletResponse response) throws UnsupportedEncodingException, SQLException {
+
+        ShopExample shopExample = new ShopExample();
+        shopExample.createCriteria().andNameEqualTo(name);
+        List<Shop> shops = shopMapper.selectByExample(shopExample);
+        if(shops.size() < 0)
+            throw new SQLException();
+        else{
+            ShopPicExample shopPicExample = new ShopPicExample();
+            shopPicExample.createCriteria().andShopIdEqualTo(shops.get(0).getId());
+            List<ShopPic> shopPics = shopPicMapper.selectByExample(shopPicExample);
+            return Response.status(HttpServletResponse.SC_OK).entity(shopPics).build();
+        }
+
+    }
+
+    @POST
+    @Path("/shop_pic/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addPic(ShopPic shopPic,
+                               @Context UriInfo uriInfo, @Context HttpServletResponse response) throws UnsupportedEncodingException, SQLException {
+
+        shopPicMapper.insertSelective(shopPic);
+        return Response.status(HttpServletResponse.SC_ACCEPTED).entity(shopPic).build();
+
+    }
+
 }

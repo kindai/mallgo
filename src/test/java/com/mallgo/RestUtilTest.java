@@ -6,7 +6,9 @@ package com.mallgo;
 
 import com.google.gson.Gson;
 import com.mallgo.common.RestUtil;
+import com.mallgo.common.enums.ShopStatus;
 import com.mallgo.common.enums.UserStatus;
+import com.mallgo.model.Shop;
 import com.mallgo.model.User;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -23,6 +25,11 @@ public class RestUtilTest {
         json = restUtil.getJSON("http://localhost:8080/rest/item/Persian");
         System.out.println(json);
 
+    }
+
+    @Test
+    public void testUser() throws Exception{
+        RestUtil restUtil = new RestUtil();
         User user = new User();
         user.setUsername("kin");
         user.setEmail("kintomiko@gmail.com");
@@ -36,6 +43,19 @@ public class RestUtilTest {
         user.setCreatedBy("kin");
         user.setModifiedBy("kin");
         String rst = restUtil.postJSON("http://localhost:8080/rest/user/", new Gson().toJson(user));
+        System.out.println(rst);
+    }
+
+    @Test
+    public void testShop() throws Exception{
+        RestUtil restUtil = new RestUtil();
+        Shop shop = new Shop();
+        shop.setName("test_shop");
+        shop.setStatus(ShopStatus.PENDING.getId());
+        shop.setCreatedBy("kin");
+        shop.setModifiedBy("kin");
+        shop.setUserId(10000000001L);
+        String rst = restUtil.postJSON("http://localhost:8080/rest/shop/", new Gson().toJson(shop));
         System.out.println(rst);
     }
 

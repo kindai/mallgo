@@ -53,17 +53,11 @@ public class UserRestBean {
     }
 
     @POST
-    @Path("/{tokenCode}")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(User user, @PathParam("tokenCode") String tokenCode, @QueryParam("s") String salt,
+    public Response updateUser(User user,
                                   @Context UriInfo uriInfo, @Context HttpServletResponse response) throws UnsupportedEncodingException, SQLException {
-
-        RestUtil restUtil = new RestUtil();
-
-        if(!restUtil.isValidToken(tokenCode, salt)){
-            return Response.status(HttpServletResponse.SC_FORBIDDEN).entity("").build();
-        }
 
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUsernameEqualTo(user.getUsername());
@@ -76,7 +70,7 @@ public class UserRestBean {
             throw new SQLException();
         }
 
-        return Response.status(HttpServletResponse.SC_OK).build();
+        return Response.status(HttpServletResponse.SC_ACCEPTED).entity(user).build();
 
     }
 }
