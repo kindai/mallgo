@@ -58,6 +58,26 @@ public class RestUtil {
         return "";
     }
 
+    public String postJSON(String url, String json) {
+        WebResource webResource = CLIENT.resource(url);
+        try {
+            LOG.debug(json);
+            ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .post(ClientResponse.class, json);
+            if (response.getStatus() != 202) {
+                LOG.error("REST webservice api call failed with url: " + url + " response status is: " + response.getStatus());
+                throw new RuntimeException("REST webservice api call failed with url: " + url);
+            }
+            String resp = response.getEntity(String.class);
+            LOG.debug(resp);
+            return resp;
+        } catch (RuntimeException ex) {
+            LOG.error("REST webservice api call failed with url: " + url, ex);
+        }
+        return "";
+    }
+
     String enableZip(String url) {
         return addParam(url, "zip", "true");
     }

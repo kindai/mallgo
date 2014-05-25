@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.UnsupportedEncodingException;
@@ -27,15 +28,8 @@ public class ProductRestBean {
     private ProductMapper productMapper;
 
     @GET
-    @Path("/")
-    @Produces("application/json")
-    public String hello(){
-        return "hello world";
-    }
-
-    @GET
-    @Path("/get_product_by_name/{name}/{tokenCode}")
-    @Produces("application/json")
+    @Path("/{name}/{tokenCode}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getProductByName(@PathParam("name")String name, @PathParam("tokenCode") String tokenCode, @QueryParam("zip") Boolean compressed,  @QueryParam("s") String salt,
                                      @Context UriInfo uriInfo, @Context HttpServletResponse response) throws UnsupportedEncodingException {
 

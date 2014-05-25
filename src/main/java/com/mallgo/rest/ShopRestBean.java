@@ -2,10 +2,11 @@ package com.mallgo.rest;
 
 import com.google.gson.Gson;
 import com.mallgo.common.RestUtil;
-import com.mallgo.model.Item;
+import com.mallgo.model.Shop;
+import com.mallgo.model.ShopExample;
 import com.mallgo.model.User;
 import com.mallgo.model.UserExample;
-import com.mallgo.persistence.ItemMapper;
+import com.mallgo.persistence.ShopMapper;
 import com.mallgo.persistence.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,18 +22,18 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by kin on 5/24/14.
+ * Created by kindai on 14-5-24.
  */
 @Component
-@Path("/user")
-public class UserRestBean {
+@Path("shop")
+public class ShopRestBean {
     @Autowired
-    private UserMapper userMapper;
+    private ShopMapper shopMapper;
 
     @GET
     @Path("/{name}/{tokenCode}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserByName(@PathParam("name")String name, @PathParam("tokenCode") String tokenCode, @QueryParam("zip") Boolean compressed,  @QueryParam("s") String salt,
+    public Response getShopByName(@PathParam("name")String name, @PathParam("tokenCode") String tokenCode, @QueryParam("zip") Boolean compressed,  @QueryParam("s") String salt,
                                   @Context UriInfo uriInfo, @Context HttpServletResponse response) throws UnsupportedEncodingException {
 
         RestUtil restUtil = new RestUtil();
@@ -40,10 +41,10 @@ public class UserRestBean {
         if(!restUtil.isValidToken(tokenCode, salt)){
             return Response.status(HttpServletResponse.SC_FORBIDDEN).entity("").build();
         }
-        UserExample userExample = new UserExample();
-        userExample.createCriteria().andUsernameEqualTo(name);
-        List<User> users = userMapper.selectByExample(userExample);
-        String jsonIds = new Gson().toJson(users);
+        ShopExample shopExample = new ShopExample();
+        shopExample.createCriteria().andNameEqualTo(name);
+        List<Shop> shops = shopMapper.selectByExample(shopExample);
+        String jsonIds = new Gson().toJson(shops);
         if(Boolean.FALSE.equals(compressed)){
             return Response.status(HttpServletResponse.SC_OK).entity(jsonIds).build();
         }
@@ -56,8 +57,8 @@ public class UserRestBean {
     @Path("/{tokenCode}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(User user, @PathParam("tokenCode") String tokenCode, @QueryParam("s") String salt,
-                                  @Context UriInfo uriInfo, @Context HttpServletResponse response) throws UnsupportedEncodingException, SQLException {
+    public Response updateShop(Shop shop, @PathParam("tokenCode") String tokenCode, @QueryParam("s") String salt,
+                               @Context UriInfo uriInfo, @Context HttpServletResponse response) throws UnsupportedEncodingException, SQLException {
 
         RestUtil restUtil = new RestUtil();
 
@@ -65,13 +66,13 @@ public class UserRestBean {
             return Response.status(HttpServletResponse.SC_FORBIDDEN).entity("").build();
         }
 
-        UserExample userExample = new UserExample();
-        userExample.createCriteria().andUsernameEqualTo(user.getUsername());
-        List<User> users = userMapper.selectByExample(userExample);
-        if(users.size() == 1){
-            userMapper.updateByExampleSelective(user, userExample);
-        }else if(users.size() == 0){
-            userMapper.insertSelective(user);
+        ShopExample shopExample = new ShopExample();
+        shopExample.createCriteria().andNameEqualTo(shop.getName());
+        List<Shop> shops = shopMapper.selectByExample(shopExample);
+        if(shops.size() == 1){
+            shopMapper.updateByExampleSelective(shop, shopExample);
+        }else if(shops.size() == 0){
+            shopMapper.insertSelective(shop);
         }else{
             throw new SQLException();
         }

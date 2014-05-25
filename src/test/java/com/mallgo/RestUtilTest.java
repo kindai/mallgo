@@ -6,6 +6,8 @@ package com.mallgo;
 
 import com.google.gson.Gson;
 import com.mallgo.common.RestUtil;
+import com.mallgo.common.enums.UserStatus;
+import com.mallgo.model.User;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -15,13 +17,26 @@ public class RestUtilTest {
     @Test
     public void testGetJSON() throws Exception {
         RestUtil restUtil = new RestUtil();
-        String json = restUtil.getJSON("http://localhost:8080/rest/product/get_product_by_name/Persian");
+        String json = restUtil.getJSON("http://localhost:8080/rest/product/Persian");
         System.out.println(json);
-        String s = RestUtil.decodeAndUnzip(json);
-        System.out.println(s);
 
-        json = restUtil.getJSON("http://localhost:8080/rest/item/get_item_by_name/Persian");
+        json = restUtil.getJSON("http://localhost:8080/rest/item/Persian");
         System.out.println(json);
+
+        User user = new User();
+        user.setUsername("kin");
+        user.setEmail("kintomiko@gmail.com");
+        user.setCity(2L);
+        user.setCountry(1L);
+        user.setLanguagepreference(-1L);
+        user.setStatus(UserStatus.ENABLED.getId());
+        user.setPassword("123123".getBytes());
+        user.setZip("133133");
+        user.setState(2L);
+        user.setCreatedBy("kin");
+        user.setModifiedBy("kin");
+        String rst = restUtil.postJSON("http://localhost:8080/rest/user/", new Gson().toJson(user));
+        System.out.println(rst);
     }
 
     @Test
